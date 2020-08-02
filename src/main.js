@@ -349,10 +349,10 @@ render(tripEventsBlock, createSortMenuTemlate(), `beforeend`);
 
 render(tripEventsBlock, createListTrip(), `beforeend`);
 
-let tripList = tripEventsBlock.querySelector(`.trip-days`);
+const tripList = tripEventsBlock.querySelector(`.trip-days`);
 render(tripList, createTripDay(), `beforeend`);
 
-let tripDay = tripEventsBlock.querySelector(`.trip-days__item > ul`);
+const tripDay = tripEventsBlock.querySelector(`.trip-days__item > ul`);
 
 render(tripDay, createEditEventTemplate(), `beforeend`);
 
