@@ -1,5 +1,5 @@
 export const createEventTemplate = (eventData) => {
-  const {pointType, city, date, offers, destination, pointTime} = eventData;
+  const {pointType, city, date, offers, pointTime} = eventData;
 
   const getOffersList = () => {
     let offersList = ``;
@@ -18,14 +18,14 @@ export const createEventTemplate = (eventData) => {
 
   const offersMarkup = getOffersList();
 
-  const getEventTime = (pointTime) => {
-    const hours = Math.floor(pointTime / 60);
+  const getEventTime = (time) => {
+    const hours = Math.floor(time / 60);
     const days = Math.floor(hours / 24);
-    const minutes = pointTime - (hours * 60);
+    const minutes = time - (hours * 60);
 
-    const date = `${days > 0 ? `${days}D` : ``} ${hours > 0 ? `${hours}H` : ``} ${minutes}M`;
+    const datestring = `${days > 0 ? `${days}D` : ``} ${hours > 0 ? `${hours}H` : ``} ${minutes}M`;
 
-    return date;
+    return datestring;
   };
 
   const timeEvent = getEventTime(pointTime);

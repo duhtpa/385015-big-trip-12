@@ -3,9 +3,7 @@ export const createEditEventTemplate = (eventData = {}) => {
     pointType,
     city,
     date,
-    pointTime,
     offers,
-    destination,
   } = eventData;
 
   const getOffersMarkup = () => {
