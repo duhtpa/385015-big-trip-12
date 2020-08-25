@@ -6,8 +6,36 @@ import {createListTrip} from "./view/tripList.js";
 import {createTripDay} from "./view/tripDay.js";
 import {createEventTemplate} from "./view/tripEvent.js";
 import {createEditEventTemplate} from "./view/tripEventEdit.js";
+import {generateEvent} from "./mock/task.js";
 
-const EVENT_COUNT = 3;
+const EVENT_COUNT = 20;
+
+const arrEvents = new Array(EVENT_COUNT).fill().map(generateEvent);
+
+const sortArrayEvents = function (arr) {
+  const namesComparator = function (left, right) {
+    if (left < right) {
+      return 1;
+    } else if (left > right) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+
+  const resultArray = arr.slice().sort(function (left, right) {
+    const rankDiff = left.date.begin - right.date.begin;
+    if (rankDiff === 0) {
+      rankDiff = namesComparator(left.date.begin, right.date.begin);
+    }
+
+    return rankDiff;
+  });
+
+  return resultArray;
+};
+
+const events = sortArrayEvents(arrEvents);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -30,12 +58,36 @@ render(tripEventsBlock, createSortMenuTemlate(), `beforeend`);
 render(tripEventsBlock, createListTrip(), `beforeend`);
 
 const tripList = tripEventsBlock.querySelector(`.trip-days`);
-render(tripList, createTripDay(), `beforeend`);
 
-const tripDay = tripEventsBlock.querySelector(`.trip-days__item > ul`);
+render(tripList, createEditEventTemplate(events[0]), `beforebegin`);
 
-render(tripDay, createEditEventTemplate(), `beforeend`);
+const getDayArray = (eventsArr) => {
+  let dates = new Set();
 
-for (let i = 0; i < EVENT_COUNT; i++) {
-  render(tripDay, createEventTemplate(), `beforeend`);
-}
+  const getSetDate = () => {
+    eventsArr.slice(1).forEach((event) => {
+      dates.add(event.date.begin.toLocaleString(`en-GB`, {month: `numeric`, day: `numeric`}));
+    });
+
+    dates = Array.from(dates);
+
+    return dates;
+  };
+
+  dates = getSetDate(eventsArr);
+
+  dates.forEach((date, index) => {
+    render(tripList, createTripDay(date, index), `beforeend`);
+    let tripDay = tripEventsBlock.querySelectorAll(`.trip-days__item > ul`);
+
+    for (let i = 1; i < eventsArr.length; i++) {
+      const eventDate = eventsArr[i].date.begin.toLocaleString(`en-GB`, {month: `numeric`, day: `numeric`});
+
+      if (date === eventDate) {
+        render(tripDay[dates.indexOf(date)], createEventTemplate(eventsArr[i]), `beforeend`);
+      }
+    }
+  });
+};
+
+getDayArray(events);
