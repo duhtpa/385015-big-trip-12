@@ -120,7 +120,7 @@ const generatePhoto = () => {
   return pictureRandom;
 };
 
-const arrPhotos = new Array(getRandomInteger(1, MAX_PHOTOS_IN_POINT - 1)).fill().map(generatePhoto);
+const photos = new Array(getRandomInteger(1, MAX_PHOTOS_IN_POINT - 1)).fill().map(generatePhoto);
 
 const generateTime = (date) => {
   const timeRandom = date.setHours(getRandomInteger(0, 23), getRandomInteger(0, 59), getRandomInteger(0, 59), 999);
@@ -141,8 +141,8 @@ const generateDate = () => {
 
 export const generateEvent = () => {
   const dateBegin = generateDate();
-  let dateEnd = new Date(dateBegin);
   const dateGap = getRandomInteger(1, MAX_DAYS_GAP);
+  const dateEnd = new Date(dateBegin);
   dateEnd.setDate(dateBegin.getDate() + dateGap);
   generateTime(dateEnd);
 
@@ -159,7 +159,7 @@ export const generateEvent = () => {
     offers: generateOffers(),
     destination: {
       description,
-      arrPhotos,
+      photos,
     }
   };
 };

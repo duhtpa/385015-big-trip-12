@@ -23,9 +23,9 @@ export const createEventTemplate = (eventData) => {
     const days = Math.floor(hours / 24);
     const minutes = time - (hours * 60);
 
-    const datestring = `${days > 0 ? `${days}D` : ``} ${hours > 0 ? `${hours}H` : ``} ${minutes}M`;
+    const dateString = `${days > 0 ? `${days}D` : ``} ${hours > 0 ? `${hours}H` : ``} ${minutes}M`;
 
-    return datestring;
+    return dateString;
   };
 
   const timeEvent = getEventTime(pointTime);

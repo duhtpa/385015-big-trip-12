@@ -7,19 +7,16 @@ export const createEditEventTemplate = (eventData = {}) => {
   } = eventData;
 
   const getOffersMarkup = () => {
-    let offersList = ``;
-
-    offers.forEach((it) => {
-      offersList +=
-      `<div class="event__offer-selector">
-        <input class="event__offer-checkbox  visually-hidden" id="event-offer-${it.type}-1" type="checkbox" name="event-offer-${it.type}" checked>
-        <label class="event__offer-label" for="event-offer-${it.type}-1">
-          <span class="event__offer-title">${it.name}</span>
-          &plus;
-          &euro;&nbsp;<span class="event__offer-price">${it.price}</span>
-        </label>
-      </div>`;
-    });
+    let offersList = offers
+    .map((offer) => `<div class="event__offer-selector">
+    <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offer.type}-1" type="checkbox" name="event-offer-${offer.type}" checked>
+    <label class="event__offer-label" for="event-offer-${offer.type}-1">
+      <span class="event__offer-title">${offer.name}</span>
+      &plus;
+      &euro;&nbsp;<span class="event__offer-price">${offer.price}</span>
+    </label>
+    </div>`)
+    .join(``);
 
     return offersList;
   };

@@ -12,8 +12,8 @@ const EVENT_COUNT = 20;
 
 const arrEvents = new Array(EVENT_COUNT).fill().map(generateEvent);
 
-const sortArrayEvents = function (arr) {
-  const namesComparator = function (left, right) {
+const sortArrayEvents = (arr) => {
+  const namesComparator = (left, right) => {
     if (left < right) {
       return 1;
     } else if (left > right) {
