@@ -1,4 +1,17 @@
-export const createEditEventTemplate = (eventData = {}) => {
+import {createElement} from "../utils.js";
+
+const BLANK_EVENT = {
+  pointType: `Taxi to `,
+  city: `Amsterdam`,
+  date: new Date(),
+  offers: {
+    type: `uber`,
+    name: `Order Uber`,
+    price: 20,
+  },
+};
+
+const createEditEventTemplate = (eventData) => {
   const {
     pointType,
     city,
@@ -154,3 +167,26 @@ export const createEditEventTemplate = (eventData = {}) => {
     </form>`
   );
 };
+
+export default class TripEventEdit {
+  constructor(eventData = {BLANK_EVENT}) {
+    this._eventData = eventData;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEditEventTemplate(this._eventData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

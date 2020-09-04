@@ -1,4 +1,6 @@
-export const createEventTemplate = (eventData) => {
+import {createElement} from "../utils.js";
+
+const createEventTemplate = (eventData) => {
   const {pointType, city, date, offers, pointTime} = eventData;
 
   const getOffersList = () => {
@@ -62,3 +64,26 @@ export const createEventTemplate = (eventData) => {
     </li>`
   );
 };
+
+export default class TripEvent {
+  constructor(eventData) {
+    this._eventData = eventData;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEventTemplate(this._eventData);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
