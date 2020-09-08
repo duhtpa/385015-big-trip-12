@@ -3,6 +3,7 @@ import SiteMenuView from "./view/menu.js";
 import FilterView from "./view/filter.js";
 import SortMenu from "./view/sort.js";
 import TripList from "./view/tripList.js";
+import NoEventView from "./view/no-event.js";
 import TripDayView from "./view/tripDay.js";
 import TripEventView from "./view/tripEvent.js";
 import TripEventEditView from "./view/tripEventEdit.js";
@@ -56,13 +57,26 @@ const renderEvent = (tripListElement, tripEvent) => {
     tripListElement.replaceChild(tripEventComponent.getElement(), tripEventEditComponent.getElement());
   };
 
+  const onEscKeyDown = (evt) => {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      evt.preventDefault();
+      replaceFormToEvent();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
   tripEventComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, () => {
     replaceEventToForm();
+    document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  tripEventEditComponent.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, (evt) => {
+  // let a = tripEventEditComponent.getElement();
+  // let b = a.querySelector(`.event__header`);
+  // console.log(b);
+  tripEventEditComponent.getElement().addEventListener(`submit`, (evt) => {
     evt.preventDefault();
     replaceFormToEvent();
+    document.removeEventListener(`keydown`, onEscKeyDown);
   });
 
   render(tripListElement, tripEventComponent.getElement(), RenderPosition.BEFOREEND);
@@ -73,13 +87,15 @@ render(tripMainBlock, new TripMainView().getElement(), RenderPosition.AFTERBEGIN
 render(tripControlHeaders[0], new SiteMenuView().getElement(), RenderPosition.AFTEREND);
 render(tripControlHeaders[1], new FilterView().getElement(), RenderPosition.AFTEREND);
 
-render(tripEventsBlock, new SortMenu().getElement(), RenderPosition.BEFOREEND);
+if (arrEvents.length === 0) {
+  render(tripEventsBlock, new NoEventView().getElement(), RenderPosition.BEFOREEND);
+} else {
+  render(tripEventsBlock, new SortMenu().getElement(), RenderPosition.BEFOREEND);
+}
 
 render(tripEventsBlock, new TripList().getElement(), RenderPosition.BEFOREEND);
 
 const tripList = tripEventsBlock.querySelector(`.trip-days`);
-
-// render(tripList, new TripEventEditView(events[0]).getElement(), RenderPosition.BEFOREBEGIN);
 
 const getDayArray = (eventsArr) => {
   let dates = new Set();
