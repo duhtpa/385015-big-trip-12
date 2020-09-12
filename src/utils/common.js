@@ -5,7 +5,7 @@ export const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-export const sortByAscending = (arr) => {
+export const sortingByAscending = (arr) => {
   const namesComparator = (left, right) => {
     if (left < right) {
       return 1;
@@ -14,7 +14,7 @@ export const sortByAscending = (arr) => {
     } return 0;
   };
 
-  const resultArray = arr.slice().sort(function (left, right) {
+  const resultArray = arr.slice().sort((left, right) => {
     const rankDiff = left.date.begin - right.date.begin;
     if (rankDiff === 0) {
       rankDiff = namesComparator(left.date.begin, right.date.begin);

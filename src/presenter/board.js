@@ -8,7 +8,7 @@ import TripEventEditView from "../view/tripEventEdit.js";
 import {getDates} from "../utils/common.js";
 import {render, RenderPosition, replace} from "../utils/render.js";
 
-export default class Board {
+export default class Trip {
   constructor() {
     this._boardEvents = document.querySelector(`.page-main .trip-events`);
 
@@ -18,12 +18,7 @@ export default class Board {
   }
 
   init(eventsArr) {
-    this._eventsArr = eventsArr.slice();
-
     this._renderBoard(eventsArr);
-
-    render(this._boardEvents, this._tripListComponent, RenderPosition.BEFOREEND);
-
     this._renderDays(eventsArr);
   }
 
@@ -74,13 +69,13 @@ export default class Board {
       render(tripList, tripDayComponent, RenderPosition.BEFOREEND);
       const dayEvents = this._boardEvents.querySelectorAll(`.trip-days__item > ul`);
 
-      for (let i = 0; i < eventsArr.length; i++) {
-        const eventDate = eventsArr[i].date.begin.toLocaleString(`en-GB`, {month: `numeric`, day: `numeric`});
+      eventsArr.forEach((tripEvent) => {
+        const eventDate = tripEvent.date.begin.toLocaleString(`en-GB`, {month: `numeric`, day: `numeric`});
 
         if (date === eventDate) {
-          this._renderEvent(dayEvents[dates.indexOf(date)], eventsArr[i]);
+          this._renderEvent(dayEvents[dates.indexOf(date)], tripEvent);
         }
-      }
+      });
     });
   }
 
@@ -94,5 +89,7 @@ export default class Board {
     } else {
       this._renderSort();
     }
+
+    render(this._boardEvents, this._tripListComponent, RenderPosition.BEFOREEND);
   }
 }

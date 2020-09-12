@@ -5,16 +5,13 @@ const createEventTemplate = (eventData) => {
   const {pointType, city, date, offers, pointTime} = eventData;
 
   const getOffersListTemplate = () => {
-    let offersListTemplate = ``;
-
-    offers.forEach((it) => {
-      offersListTemplate +=
-      `<li class="event__offer">
-        <span class="event__offer-title">${it.name}</span>
-        &plus;
-        &euro;&nbsp;<span class="event__offer-price">${it.price}</span>
-      </li>`;
-    });
+    let offersListTemplate = offers
+    .map((offer) => `<li class="event__offer">
+      <span class="event__offer-title">${offer.name}</span>
+      &plus;
+      &euro;&nbsp;<span class="event__offer-price">${offer.price}</span>
+    </li>`)
+    .join(``);
 
     return offersListTemplate;
   };
