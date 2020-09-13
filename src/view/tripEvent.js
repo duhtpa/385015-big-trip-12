@@ -1,35 +1,22 @@
-import {createElement} from "../utils.js";
+import AbstractView from "./abstract.js";
+import {getEventTime} from "../utils/common.js";
 
 const createEventTemplate = (eventData) => {
   const {pointType, city, date, offers, pointTime} = eventData;
 
-  const getOffersList = () => {
-    let offersList = ``;
+  const getOffersListTemplate = () => {
+    let offersListTemplate = offers
+    .map((offer) => `<li class="event__offer">
+      <span class="event__offer-title">${offer.name}</span>
+      &plus;
+      &euro;&nbsp;<span class="event__offer-price">${offer.price}</span>
+    </li>`)
+    .join(``);
 
-    offers.forEach((it) => {
-      offersList +=
-      `<li class="event__offer">
-        <span class="event__offer-title">${it.name}</span>
-        &plus;
-        &euro;&nbsp;<span class="event__offer-price">${it.price}</span>
-      </li>`;
-    });
-
-    return offersList;
+    return offersListTemplate;
   };
 
-  const offersMarkup = getOffersList();
-
-  const getEventTime = (time) => {
-    const hours = Math.floor(time / 60);
-    const days = Math.floor(hours / 24);
-    const minutes = time - (hours * 60);
-
-    const dateString = `${days > 0 ? `${days}D` : ``} ${hours > 0 ? `${hours}H` : ``} ${minutes}M`;
-
-    return dateString;
-  };
-
+  const offersMarkup = getOffersListTemplate();
   const timeEvent = getEventTime(pointTime);
 
   return (
@@ -65,25 +52,25 @@ const createEventTemplate = (eventData) => {
   );
 };
 
-export default class TripEvent {
+export default class TripEvent extends AbstractView {
   constructor(eventData) {
+    super();
     this._eventData = eventData;
-    this._element = null;
+
+    this._editClickHandler = this._editClickHandler.bind(this);
   }
 
   getTemplate() {
     return createEventTemplate(this._eventData);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _editClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.editClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setEditClickHandler(callback) {
+    this._callback.editClick = callback;
+    this.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, this._editClickHandler);
   }
 }

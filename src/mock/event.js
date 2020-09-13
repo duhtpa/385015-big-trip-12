@@ -1,4 +1,4 @@
-import {getRandomInteger} from "../utils.js";
+import {getRandomInteger} from "../utils/common.js";
 
 const MAX_PHOTOS_IN_POINT = 5;
 const MAX_DAYS_GAP = 1;

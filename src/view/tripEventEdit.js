@@ -1,15 +1,5 @@
-import {createElement} from "../utils.js";
-
-const BLANK_EVENT = {
-  pointType: `Taxi to `,
-  city: `Amsterdam`,
-  date: new Date(),
-  offers: {
-    type: `uber`,
-    name: `Order Uber`,
-    price: 20,
-  },
-};
+import AbstractView from "./abstract.js";
+import {BLANK_EVENT} from "../const.js";
 
 const createEditEventTemplate = (eventData) => {
   const {
@@ -168,25 +158,25 @@ const createEditEventTemplate = (eventData) => {
   );
 };
 
-export default class TripEventEdit {
+export default class TripEventEdit extends AbstractView {
   constructor(eventData = {BLANK_EVENT}) {
+    super();
     this._eventData = eventData;
-    this._element = null;
+
+    this._formSubmitHandler = this._formSubmitHandler.bind(this);
   }
 
   getTemplate() {
     return createEditEventTemplate(this._eventData);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _formSubmitHandler(evt) {
+    evt.preventDefault();
+    this._callback.formSubmit();
   }
 
-  removeElement() {
-    this._element = null;
+  setFormSubmitHandler(callback) {
+    this._callback.formSubmit = callback;
+    this.getElement().addEventListener(`submit`, this._formSubmitHandler);
   }
 }
