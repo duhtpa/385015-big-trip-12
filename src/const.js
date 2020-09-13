@@ -8,3 +8,9 @@ export const BLANK_EVENT = {
     price: 20,
   },
 };
+
+export const SortType = {
+  DEFAULT: `event`,
+  PRICE: `price`,
+  TIME: `time`,
+};
