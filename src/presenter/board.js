@@ -5,25 +5,70 @@ import TripDayView from "../view/tripDay.js";
 import TripEventView from "../view/tripEvent.js";
 import TripEventEditView from "../view/tripEventEdit.js";
 
-import {getDates} from "../utils/common.js";
+import {getDates, sortByPrice, sortByTime} from "../utils/common.js";
 import {render, RenderPosition, replace} from "../utils/render.js";
+import {SortType} from "../const.js";
 
 export default class Trip {
   constructor() {
     this._boardEvents = document.querySelector(`.page-main .trip-events`);
+    this._currentSortType = SortType.DEFAULT;
 
     this._menuSortComponent = new MenuSortView();
     this._noEventComponent = new NoEventView();
     this._tripListComponent = new TripListView();
+    this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
   }
 
   init(eventsArr) {
+    this._eventsArr = eventsArr.slice();
+    this._sortedEventsArr = eventsArr.slice();
+
     this._renderBoard(eventsArr);
     this._renderDays(eventsArr);
   }
 
+  _sortEvents(sortType) {
+    switch (sortType) {
+      case SortType.PRICE:
+        this._eventsArr.sort(sortByPrice);
+        break;
+      case SortType.TIME:
+        this._eventsArr.sort(sortByTime);
+        break;
+      default:
+        this._eventsArr = this._sortedEventsArr.slice();
+    }
+
+    this._currentSortType = sortType;
+  }
+
+  _handleSortTypeChange(sortType) {
+    if (this._currentSortType === sortType) {
+      return;
+    }
+
+    this._sortEvents(sortType);
+    this._clearEventList();
+
+    if (sortType === `price` || sortType === `time`) {
+      this._eventsArr.forEach((tripEvent) => {
+        this._renderEvent(this._tripListComponent, tripEvent);
+        document.querySelector(`.trip-days`).style = `margin-left: 80px`;
+      });
+    } else {
+      this._renderDays(this._eventsArr);
+      document.querySelector(`.trip-days`).style = `margin-left: 0`;
+    }
+  }
+
+  _clearEventList() {
+    this._tripListComponent.getElement().innerHTML = ``;
+  }
+
   _renderSort() {
     render(this._boardEvents, this._menuSortComponent, RenderPosition.BEFOREEND);
+    this._menuSortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
   _renderEvent(tripListElement, tripEvent) {

@@ -930,3 +930,9 @@ main {
 
 .statistics__item:not(:last-child) {
   margin-bottom: 78px; }
+
+  .day-tag--hidden {
+    font-size: 0;
+    margin-right: 5px
+  }
+  

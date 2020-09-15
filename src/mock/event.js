@@ -155,6 +155,7 @@ export const generateEvent = () => {
     destination: {
       description,
       photos,
-    }
+    },
+    price: getRandomInteger(15, 140),
   };
 };

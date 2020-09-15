@@ -2,7 +2,7 @@ import AbstractView from "./abstract.js";
 import {getEventTime} from "../utils/common.js";
 
 const createEventTemplate = (eventData) => {
-  const {pointType, city, date, offers, pointTime} = eventData;
+  const {pointType, city, date, offers, pointTime, price} = eventData;
 
   const getOffersListTemplate = () => {
     let offersListTemplate = offers
@@ -36,7 +36,7 @@ const createEventTemplate = (eventData) => {
           <p class="event__duration">${timeEvent}</p>
         </div>
         <p class="event__price">
-          &euro;&nbsp;<span class="event__price-value">20</span>
+          &euro;&nbsp;<span class="event__price-value">${price}</span>
         </p>
 
         <h4 class="visually-hidden">Offers:</h4>

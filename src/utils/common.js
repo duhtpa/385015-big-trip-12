@@ -6,7 +6,7 @@ export const getRandomInteger = (a = 0, b = 1) => {
 };
 
 export const sortingByAscending = (arr) => {
-  const namesComparator = (left, right) => {
+  const runNamesComparator = (left, right) => {
     if (left < right) {
       return 1;
     } else if (left > right) {
@@ -17,7 +17,7 @@ export const sortingByAscending = (arr) => {
   const resultArray = arr.slice().sort((left, right) => {
     const rankDiff = left.date.begin - right.date.begin;
     if (rankDiff === 0) {
-      rankDiff = namesComparator(left.date.begin, right.date.begin);
+      rankDiff = runNamesComparator(left.date.begin, right.date.begin);
     }
 
     return rankDiff;
@@ -46,4 +46,12 @@ export const getEventTime = (time) => {
   const dateString = `${days > 0 ? `${days}D` : ``} ${hours > 0 ? `${hours}H` : ``} ${minutes}M`;
 
   return dateString;
+};
+
+export const sortByTime = (left, right) => {
+  return left.pointTime - right.pointTime;
+};
+
+export const sortByPrice = (left, right) => {
+  return left.price - right.price;
 };
