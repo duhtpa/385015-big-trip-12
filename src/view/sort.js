@@ -53,6 +53,11 @@ export default class MenuSort extends AbstractView {
     }
 
     evt.preventDefault();
+
+    Array.from(document.querySelectorAll(`.trip-sort__input`)).forEach((header) => {
+      header.removeAttribute(`checked`);
+    });
+    evt.target.previousElementSibling.setAttribute(`checked`, ``);
     this._callback.sortTypeChange(evt.target.dataset.sortType);
   }
 

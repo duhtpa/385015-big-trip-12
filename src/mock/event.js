@@ -10,56 +10,16 @@ const DescriptionStrings = {
 
 const generatePointType = () => {
   const pointTypes = [
-    {
-      name: `Taxi `,
-      action: `to `,
-      price: 20,
-    },
-    {
-      name: `Bus `,
-      action: `to `,
-      price: 10,
-    },
-    {
-      name: `Train `,
-      action: `to `,
-      price: 45,
-    },
-    {
-      name: `Ship `,
-      action: `to `,
-      price: 70,
-    },
-    {
-      name: `Transport `,
-      action: `to `,
-      price: 110,
-    },
-    {
-      name: `Drive `,
-      action: `to `,
-      price: 60,
-    },
-    {
-      name: `Flight `,
-      action: `to `,
-      price: 80,
-    },
-    {
-      name: `Check-in `,
-      action: `in `,
-      price: 30,
-    },
-    {
-      name: `Sightseeing `,
-      action: `in `,
-      price: 45,
-    },
-    {
-      name: `Restaurant `,
-      action: `in `,
-      price: 75,
-    },
+    `Taxi to `,
+    `Bus to `,
+    `Train to `,
+    `Ship to `,
+    `Transport to `,
+    `Drive to `,
+    `Flight to `,
+    `Check-in in `,
+    `Sightseeing in `,
+    `Restaurant in`,
   ];
 
   const randomIndex = getRandomInteger(0, pointTypes.length - 1);
@@ -195,6 +155,7 @@ export const generateEvent = () => {
     destination: {
       description,
       photos,
-    }
+    },
+    price: getRandomInteger(15, 140),
   };
 };

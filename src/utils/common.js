@@ -53,5 +53,5 @@ export const sortByTime = (left, right) => {
 };
 
 export const sortByPrice = (left, right) => {
-  return left.pointType.price - right.pointType.price;
+  return left.price - right.price;
 };

@@ -50,14 +50,15 @@ export default class Trip {
 
     this._sortEvents(sortType);
     this._clearEventList();
+
     if (sortType === `price` || sortType === `time`) {
       this._eventsArr.forEach((tripEvent) => {
         this._renderEvent(this._tripListComponent, tripEvent);
-        document.querySelector(`.trip-sort__item--day`).classList.add(`day-tag--hidden`);
+        document.querySelector(`.trip-days`).style = `margin-left: 80px`;
       });
     } else {
       this._renderDays(this._eventsArr);
-      document.querySelector(`.trip-sort__item--day`).classList.remove(`day-tag--hidden`);
+      document.querySelector(`.trip-days`).style = `margin-left: 0`;
     }
   }
 
