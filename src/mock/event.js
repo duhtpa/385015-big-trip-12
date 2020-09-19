@@ -8,6 +8,10 @@ const DescriptionStrings = {
   MIN: 1,
 };
 
+// Для "продуктового" кода используйте что-то понадежнее,
+// вроде nanoid - https://github.com/ai/nanoid
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
+
 const generatePointType = () => {
   const pointTypes = [
     `Taxi to `,
@@ -51,31 +55,37 @@ const generateOffers = () => {
       type: `luggage`,
       name: `Add luggage`,
       price: 30,
+      checked: !!getRandomInteger(0, 1),
     },
     {
       type: `meal`,
       name: `Add meal`,
       price: 100,
+      checked: !!getRandomInteger(0, 1),
     },
     {
       type: `seats`,
       name: `Choose seats`,
       price: 15,
+      checked: !!getRandomInteger(0, 1),
     },
     {
       type: `uber`,
       name: `Order Uber`,
       price: 20,
+      checked: !!getRandomInteger(0, 1),
     },
     {
       type: `comfort`,
       name: `Switch to comfort`,
       price: 5,
+      checked: !!getRandomInteger(0, 1),
     },
     {
       type: `train`,
       name: `Travel by train`,
       price: 40,
+      checked: !!getRandomInteger(0, 1),
     },
   ];
 
@@ -144,6 +154,7 @@ export const generateEvent = () => {
   const pointTime = Math.floor((dateEnd - dateBegin) / 1000 / 60);
 
   return {
+    id: generateId(),
     pointType: generatePointType(),
     city: generateCity(),
     date: {
@@ -157,5 +168,7 @@ export const generateEvent = () => {
       photos,
     },
     price: getRandomInteger(15, 140),
+    favorite: !!getRandomInteger(0, 1),
+    isSubmitDisabled: false,
   };
 };
