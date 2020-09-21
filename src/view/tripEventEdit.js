@@ -269,11 +269,11 @@ export default class TripEventEdit extends SmartView {
   _offerClicktHandler(evt) {
     evt.preventDefault();
 
-    const arrOffers = Array.from(document.querySelectorAll(`.event__offer-checkbox`));
-    const indexElement = arrOffers.indexOf(evt.target);
+    const offersFlags = Array.from(document.querySelectorAll(`.event__offer-checkbox`));
+    const indexElement = offersFlags.indexOf(evt.target);
 
     const changeOfferCheck = () => {
-      let clonedOffers = this._data.offers.slice();
+      const clonedOffers = this._data.offers.slice();
       clonedOffers[indexElement].checked = !clonedOffers[indexElement].checked;
 
       return clonedOffers;
